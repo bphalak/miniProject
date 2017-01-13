@@ -1,0 +1,18 @@
+package connection;
+
+import java.sql.Connection;
+import java.util.Properties;
+
+public class MyConnection {
+	
+	public Connection connect(){
+		Properties prop = new Properties();
+		
+		Class.forName(prop.getProperty("driver"));
+
+		connection = DriverManager.getConnection(prop.getProperty("url"), "root", "root");
+
+		return connection;
+	}
+
+}

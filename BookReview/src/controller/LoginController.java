@@ -1,0 +1,77 @@
+package controller;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import connection.MyConnection;
+import dao.LoginDao;
+import mode.User;
+
+/**
+ * Servlet implementation class LoginController
+ */
+@WebServlet("/LoginController")
+public class LoginController extends HttpServlet {
+	Connection connection;
+	HttpSession session;
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public LoginController() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    
+    @Override
+    public void init() throws ServletException {
+    	try {
+			connection= new MyConnection().connect();
+		} catch (ClassNotFoundException | SQLException e) {
+			
+			e.printStackTrace();
+		} 
+    }
+
+	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	request.getServletContext().setAttribute("Connection", connection);
+	String userName = request.getParameter("userName");
+	String password = request.getParameter("password");
+	User userBean = new User();
+	userBean.setUserName(userName);
+	userBean.setPassword(password);
+	boolean isValid= new LoginDao(userBean,connection).authenticate();
+	
+
+	if (isValid) {
+		session = request.getSession();
+		session.setAttribute("username", userName);
+		if("user".equals(userBean.getType())){
+			System.out.println("user");
+				request.getRequestDispatcher("./userHomePage.jsp").forward(request, response);
+		}else{
+			System.out.println("admin");
+			//request.getRequestDispatcher("./AdminDashboard.jsp").forward(request, response);
+		}
+	} else {
+		System.out.println("invalid");
+		response.sendRedirect("index.html");
+	}
+	
+	}
+
+}

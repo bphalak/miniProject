@@ -1,0 +1,19 @@
+package dao;
+
+import java.sql.Connection;
+
+public class BookSearchDAO {
+	Connection connection;
+	String bookName;
+	public BookSearchDAO(Connection connection, String bookName) {
+		
+		this.connection = connection;
+		this.bookName = bookName;
+		
+	}
+	public  name() {
+		
+	}
+	
+
+}

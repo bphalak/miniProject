@@ -1,0 +1,30 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import mode.Book;
+
+public class BookSearchDAO {
+	Connection connection;
+	String bookName;
+	PreparedStatement preparedStatement;
+	public BookSearchDAO(Connection connection, String bookName) {
+		
+		this.connection = connection;
+		this.bookName = bookName.toLowerCase();
+		
+	}
+	public Book searchName() throws SQLException {
+		
+			preparedStatement = connection.prepareStatement("Select * from def_books where title=?");
+			preparedStatement.setString(1, bookName);
+			
+			
+			
+		
+	}
+	
+
+}

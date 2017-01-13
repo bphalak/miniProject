@@ -1,0 +1,21 @@
+package connection;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+
+public class MyConnection {
+	
+	public Connection connect() throws SQLException, ClassNotFoundException{
+		PropertyConfigurator.configure("D:/MiniProject/BookReview/log4j.properties");
+		Properties prop = new Properties();
+		
+		Class.forName(prop.getProperty("driver"));
+
+		Connection connect = DriverManager.getConnection(prop.getProperty("url"), prop.getProperty("dbuser"), prop.getProperty("dbpass"));
+
+		return connect;
+	}
+
+}

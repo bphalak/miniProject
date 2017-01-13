@@ -1,0 +1,15 @@
+package connection;
+
+import java.sql.Connection;
+
+public class MyConnection {
+	
+	public Connection connect(){
+		Class.forName("com.mysql.jdbc.Driver");
+
+		connection = DriverManager.getConnection("jdbc:mysql://localhost/javadb", "root", "root");
+
+		return connection;
+	}
+
+}

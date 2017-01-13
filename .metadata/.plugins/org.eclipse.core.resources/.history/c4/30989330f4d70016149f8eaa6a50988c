@@ -1,0 +1,2 @@
+url=jdbc:mysql://localhost/miniproject
+driver=com.mysql.jdbc.Driver
